@@ -1,6 +1,15 @@
+from supabase import create_client
+from dotenv import load_dotenv
+import os
 from fastapi import FastAPI
 from pydantic import BaseModel
 from datetime import date 
+
+load_dotenv()
+supabase = create_client(
+    os.getenv("SUPABASE_URL"),
+    os.getenv("SUPABASE_SERVICE_KEY")
+)
 
 app = FastAPI()
 class Expense(BaseModel):
@@ -17,8 +26,15 @@ def root():
 
 @app.post("/expenses")
 def add_expense(expense: Expense):
-    expenses.append(expense)
-    return {"message": "Expense added!", "expense": expense}
+    data = {
+        "amount": expense.amount,
+        "note": expense.note,
+        "category": expense.category,
+        "date": str(expense.date)
+    }
+    result = supabase.table("expenses").insert(data).execute()
+    return {"message": "Expense added!", "expense": result.data[0]}
 @app.get("/expenses")
 def get_expenses():
-    return expenses
+    result = supabase.table("expenses").select("*").execute()
+    return result.data
