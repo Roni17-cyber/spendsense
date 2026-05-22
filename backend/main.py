@@ -42,3 +42,13 @@ def get_expenses():
 def delete_expense(expense_id: str):
     result = supabase.table("expenses").delete().eq("id", expense_id).execute()
     return {"message": "Expense deleted!", "expense": result.data[0]}
+@app.put("/expenses/{expense_id}")
+def update_expense(expense_id: str, expense: Expense):
+    data = {
+        "amount": expense.amount,
+        "note": expense.note,
+        "category": expense.category,
+        "date": str(expense.date)
+    }
+    result = supabase.table("expenses").update(data).eq("id", expense_id).execute()
+    return {"message": "Expense updated!", "expense": result.data[0]}
