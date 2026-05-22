@@ -38,3 +38,7 @@ def add_expense(expense: Expense):
 def get_expenses():
     result = supabase.table("expenses").select("*").execute()
     return result.data
+@app.delete("/expenses/{expense_id}")
+def delete_expense(expense_id: str):
+    result = supabase.table("expenses").delete().eq("id", expense_id).execute()
+    return {"message": "Expense deleted!", "expense": result.data[0]}
