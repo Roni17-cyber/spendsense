@@ -1,3 +1,4 @@
+from categorizer import predict_category
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from supabase import create_client
@@ -35,10 +36,14 @@ def root():
 
 @app.post("/expenses")
 def add_expense(expense: Expense):
+    category = expense.category
+    if not category or category == "auto":
+        category = predict_category(expense.note)
+    
     data = {
         "amount": expense.amount,
         "note": expense.note,
-        "category": expense.category,
+        "category": category,
         "date": str(expense.date)
     }
     result = supabase.table("expenses").insert(data).execute()

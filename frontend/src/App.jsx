@@ -6,13 +6,13 @@ function App() {
   const [expenses, setExpenses] = useState([])
 
   useEffect(() => {
-    fetch('http://127.0.0.1:8000/expenses')
+    fetch('http://127.0.0.1:8001/expenses')
       .then(res => res.json())
       .then(data => setExpenses(data))
   }, [])
 
   const handleAdd = async (expense) => {
-    const res = await fetch('http://127.0.0.1:8000/expenses', {
+    const res = await fetch('http://127.0.0.1:8001/expenses', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(expense)
