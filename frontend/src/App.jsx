@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react'
 import ExpenseChart from './ExpenseChart'
 import ExpenseForm from './ExpenseForm'
 import ExpenseList from './ExpenseList'
+import AIInsights from './AIInsights'
+
 
 function App() {
   const [expenses, setExpenses] = useState([])
@@ -33,12 +35,15 @@ function App() {
 
   return (
     <div className="min-h-screen p-8">
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-6xl mx-auto">
 
-        <div className="mb-8">
-          <h1 className="text-4xl font-bold text-white">SpendSense 💸</h1>
-          <p className="text-purple-300 mt-1">Your AI powered finance tracker</p>
-        </div>
+        <div className="flex justify-between items-center mb-8">
+  <div>
+    <h1 className="text-4xl font-bold text-white">SpendSense 💸</h1>
+    <p className="text-purple-300 mt-1">Your AI powered finance tracker</p>
+  </div>
+  <AIInsights />
+</div>
 
         <div className="grid grid-cols-3 gap-4 mb-8">
           <div className="bg-white/10 backdrop-blur rounded-2xl p-5 border border-white/20">
