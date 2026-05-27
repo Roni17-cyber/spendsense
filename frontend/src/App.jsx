@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import ExpenseChart from './ExpenseChart'
 import ExpenseForm from './ExpenseForm'
 import ExpenseList from './ExpenseList'
 
@@ -22,7 +23,7 @@ function App() {
   }
 
   const handleDelete = async (id) => {
-    await fetch(`http://127.0.0.1:8000/expenses/${id}`, {
+    await fetch(`http://127.0.0.1:8001/expenses/${id}`, {
       method: 'DELETE'
     })
     setExpenses(expenses.filter(e => e.id !== id))
@@ -55,6 +56,7 @@ function App() {
         </div>
 
         <ExpenseForm onAdd={handleAdd} />
+        <ExpenseChart expenses={expenses} />
         <ExpenseList expenses={expenses} onDelete={handleDelete} />
 
       </div>
